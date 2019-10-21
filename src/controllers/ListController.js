@@ -14,13 +14,21 @@ module.exports = {
   },
   async show(req, res) {
     const list = await List.findById(req.params.id);
-    return res.json(list);
+    return res.render('list', {
+      title: list.name,
+      list,
+    });
   },
   async store(req, res) {
     const list = await List.create(req.body);
 
+    // TODO verificar se foi criado
+
     const lists = await List.find();
-    return res.render('lists', {title: 'Listas', lists: lists });
+    return res.render('lists', {
+      title: 'Listas',
+      lists: lists,
+    });
   },
   async update(req, res) {
     const list = await List.findByIdAndUpdate(req.params.id, req.body, {
@@ -30,8 +38,11 @@ module.exports = {
   },
   async destroy(req, res) {
     await List.findByIdAndRemove(req.params.id);
-    
+
     const lists = await List.find();
-    return res.render('lists', {title: 'Listas', lists: lists });
+    return res.render('lists', {
+      title: 'Listas',
+      lists: lists,
+    });
   },
 };
