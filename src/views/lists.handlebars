@@ -1,0 +1,24 @@
+<div class="container">
+    <h2>Kanban</h2>
+
+    <div class="jumbotron">
+        <form action="./lists" method="POST" accept-charset="utf-8">
+            <label for="name">Nome: </label>
+            <input type="text" name="name" value="" />
+            <label for="description">Descricao: </label>
+            <input type="text" name="description" value="" />
+            <input type="submit" name="create" value="Inserir">
+        </form>
+    </div>
+
+    {{#each lists}}
+    <div class="card m-5">
+        <div class="card-header">{{ this.name }}</div>
+        <div class="card-body">Content</div>
+        <div class="card-footer">
+            <a href="/lists/destroy/{{ this.id }}" class="btn btn-primary">Excluir</a>
+        </div>
+    </div>
+    {{/each}}
+
+</div>
