@@ -4,7 +4,8 @@
   "description": "Web 2 Project",
   "scripts": {
     "start": "node ./app.js",
-    "dev": "nodemon ./app.js"
+    "dev": "nodemon ./app.js",
+    "lint": "eslint src -c .eslintrc.json --ext js,jsx"
   },
   "dependencies": {
     "express": "^4.17.1",
