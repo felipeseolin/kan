@@ -1,15 +1,20 @@
 const mongoose = require('mongoose');
 
 const ListInit = require('../models/List');
+const CardInit = require('../models/Card');
 
 const List = mongoose.model('List');
+const Card = mongoose.model('Card');
 
 module.exports = {
   async index(req, res) {
+
     const lists = await List.find();
+    lists.cards = await Card.find();
+
     return res.render('lists', {
       title: 'Listas',
-      lists,
+      lists
     });
   },
   async show(req, res) {
