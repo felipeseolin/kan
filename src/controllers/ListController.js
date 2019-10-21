@@ -18,7 +18,9 @@ module.exports = {
   },
   async store(req, res) {
     const list = await List.create(req.body);
-    res.send();
+
+    const lists = await List.find();
+    return res.render('lists', {title: 'Listas', lists: lists });
   },
   async update(req, res) {
     const list = await List.findByIdAndUpdate(req.params.id, req.body, {
@@ -28,6 +30,8 @@ module.exports = {
   },
   async destroy(req, res) {
     await List.findByIdAndRemove(req.params.id);
-    res.send();
+    
+    const lists = await List.find();
+    return res.render('lists', {title: 'Listas', lists: lists });
   },
 };
