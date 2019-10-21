@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 const ListSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
-    required: false
+    required: false,
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 mongoose.model('List', ListSchema);
