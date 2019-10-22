@@ -17,8 +17,12 @@
                                     <p>{{ this.description }}</p>
                                     </div>
                                 <div class="float-right">
-                                    <a type="button" class="float-right btn-sm btn-primary m-2">Editar</a>
-                                    <a type="button"  href="/cards/destroy/{{ this.id }}" class="float-right btn-sm btn-success m-2">Excluir</a>
+                                    <div class="m-2 float-right">
+                                        <a href="/" class="btn btn-sm btn-primary">Editar</a>
+                                    </div>
+                                    <div class="float-right m-2">
+                                        <a href="/" href="/cards/destroy/{{ this.id }}" class="btn btn-sm btn-danger">Excluir</a>
+                                    </div>
                                 </div>
                             </div>
                         {{/each}}
@@ -26,7 +30,7 @@
                         <a class="btn btn-success" href="/cards/new?list={{ this.id }}">Novo cartão</a>
                     </div>
                     <div class="card-footer">
-                        <a href="/lists/destroy/{{ this.id }}" class="btn btn-primary">Excluir</a>
+                        <a href="/lists/destroy/{{ this.id }}" class="btn btn-danger">Excluir</a>
                     </div>
                 </div>
             </div>
