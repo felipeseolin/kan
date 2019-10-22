@@ -1,6 +1,7 @@
 version: '3'
 services:
   node:
+    container_name: server
     image: node:10.15.1-alpine
     expose:
       - "3000"
@@ -15,4 +16,7 @@ services:
       - mongo
     command: yarn dev
   mongo:
+    container_name: mongodb
     image: "mvertes/alpine-mongo"
+    ports:
+      - "27017:27017"
