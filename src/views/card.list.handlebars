@@ -1,0 +1,20 @@
+<div class="container">
+
+    <h1>{{ title }}</h1>
+    {{#each cards}}
+    <div class="card m-3">
+        <div class="card-body">
+            <h4>{{ this.name }}</h4>
+            <p>{{ this.description }}</p>
+        </div>
+        <div class="float-right">
+            <div class="m-2 float-right">
+                <a href="/" class="btn btn-sm btn-primary">Editar</a>
+            </div>
+            <div class="float-right m-2">
+                <a href="/" href="/cards/destroy/{{ this.id }}" class="btn btn-sm btn-danger">Excluir</a>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

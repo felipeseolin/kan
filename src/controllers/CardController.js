@@ -8,8 +8,8 @@ const List = mongoose.model('List');
 module.exports = {
   async index(req, res) {
     const cards = await Card.find();
-    return res.render('cards', {
-      title: 'Cardas',
+    return res.render('card.list.handlebars', {
+      title: 'Cartões',
       cards,
     });
   },
