@@ -45,11 +45,6 @@ module.exports = {
   },
   async destroy(req, res) {
     await List.findByIdAndRemove(req.params.id);
-
-    const lists = await List.find();
-    return res.render('lists', {
-      title: 'Listas',
-      lists,
-    });
+    return res.redirect('/lists')
   },
 };
