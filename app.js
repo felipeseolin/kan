@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
-var hbs = require('express-handlebars');
+const hbs = require('express-handlebars');
 
 const app = express();
 app.use(express.json());
@@ -11,7 +11,7 @@ app.set('views', path.join(__dirname, './src/views'));
 app.engine('handlebars', hbs());
 app.set('view engine', 'handlebars');
 
-mongoose.connect('mongodb://localhost:27017/node-kanban', {
+mongoose.connect('mongodb://localhost:27017/kan', {
   useNewUrlParser: true,
 });
 
