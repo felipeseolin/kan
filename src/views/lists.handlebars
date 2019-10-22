@@ -23,18 +23,6 @@
     <div class="row">
 
         {{#each lists}}
-        <!--        {{#each this.cards}}-->
-            <!--            <div class="card m-5">-->
-            <!--                <div class="card-header">{{ ../name }}</div>-->
-            <!--                <div class="card-body">-->
-            <!--                    Content-->
-            <!--                </div>-->
-            <!--                <div class="card-footer">-->
-            <!--                    <a href="/lists/destroy/{{ ../id }}" class="btn btn-primary">Excluir</a>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            <p>{{name}}</p>-->
-                <!--        {{/each }}-->
             <div class="col col-lg-3 col-md-4 col-sm-6 col-xs-12">
                 <div class="card">
                     <div class="card-header">
@@ -43,7 +31,7 @@
                     </div>
                     <div class="card-body">
                         {{#each cards}}
-                            <p>teste</p>
+                            <p>{{ this.name }}</p>
                         {{/each}}
 
                         <a class="btn btn-success" href="/cards/new?list={{ this.id }}">Novo cartão</a>

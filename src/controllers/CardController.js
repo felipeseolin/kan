@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const CardInit = require('../models/Card');
 
 const Card = mongoose.model('Card');
+const List = mongoose.model('List');
 
 module.exports = {
   async index(req, res) {
@@ -23,11 +24,18 @@ module.exports = {
     });
   },
   async store(req, res) {
-    const card = await Card.create(req.body);
+    const list = await List.findById(req.body._list);
+    if (!list) {
+      res.send('error');
+    }
 
+    const card = await Card.create(req.body);
     if (!card) {
       res.send('error');
     }
+
+    list.cards.push(card);
+    list.save();
 
     return res.redirect('/lists');
   },

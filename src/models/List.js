@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const ListSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const ListSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -9,6 +11,10 @@ const ListSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  cards: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Card',
+  }],
 }, { timestamps: true });
 
 mongoose.model('List', ListSchema);

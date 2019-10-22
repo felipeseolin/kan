@@ -8,10 +8,10 @@ const Card = mongoose.model('Card');
 
 module.exports = {
   async index(req, res) {
-    const lists = await List.find();
+    const lists = await List.find()
+      .populate('cards');
 
-    lists.map((list) => console.log(list));
-
+    console.log(lists);
     return res.render('lists', {
       title: 'Listas',
       lists,
