@@ -8,7 +8,11 @@ const CardSchema = new mongoose.Schema({
   description: {
     type: String,
     required: false,
-  }
+  },
+  listId: {
+    type: String,
+    required: true,
+  },
 }, { timestamps: true });
 
 mongoose.model('Card', CardSchema);
