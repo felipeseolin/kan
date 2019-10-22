@@ -1,25 +1,5 @@
 <div class="container-fluid">
     <h2>Kanban</h2>
-
-    <div class="jumbotron">
-        <h2>Criar lista:</h2>
-        <form action="./lists/new" method="POST" accept-charset="utf-8">
-            <label for="name">Nome: </label>
-            <input type="text" name="name" value=""/>
-            <label for="description">Descricao: </label>
-            <input type="text" name="description" value=""/>
-            <input type="submit" name="create" value="Inserir">
-        </form>
-        <br>
-        <h2>Criar cartão:</h2>
-        <form action="./cards" method="POST" accept-charset="utf-8">
-            <label for="name">Nome: </label>
-            <input type="text" name="name" value=""/>
-            <label for="description">Descricao: </label>
-            <input type="text" name="description" value=""/>
-            <input type="submit" name="create" value="Inserir">
-        </form>
-    </div>
     <div class="row">
 
         {{#each lists}}
