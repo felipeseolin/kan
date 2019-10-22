@@ -8,13 +8,13 @@ const Card = mongoose.model('Card');
 
 module.exports = {
   async index(req, res) {
-
     const lists = await List.find();
-    lists.cards = await Card.find();
+
+    lists.map((list) => console.log(list));
 
     return res.render('lists', {
       title: 'Listas',
-      lists
+      lists,
     });
   },
   async show(req, res) {
@@ -24,16 +24,19 @@ module.exports = {
       list,
     });
   },
+  form(req, res) {
+    return res.render('list.create.handlebars', {
+      title: 'Nova lista',
+    });
+  },
   async store(req, res) {
     const list = await List.create(req.body);
 
-    // TODO verificar se foi criado
+    if (!list) {
+      return res.render('errror');
+    }
 
-    const lists = await List.find();
-    return res.render('lists', {
-      title: 'Listas',
-      lists: lists,
-    });
+    return res.redirect('/lists');
   },
   async update(req, res) {
     const list = await List.findByIdAndUpdate(req.params.id, req.body, {
@@ -47,7 +50,7 @@ module.exports = {
     const lists = await List.find();
     return res.render('lists', {
       title: 'Listas',
-      lists: lists,
+      lists,
     });
   },
 };
