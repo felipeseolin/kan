@@ -11,7 +11,6 @@ module.exports = {
     const lists = await List.find()
       .populate('cards');
 
-    console.log(lists);
     return res.render('lists', {
       title: 'Listas',
       lists,

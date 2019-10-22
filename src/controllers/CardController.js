@@ -48,10 +48,12 @@ module.exports = {
   async destroy(req, res) {
     await Card.findByIdAndRemove(req.params.id);
 
-    const cards = await Card.find();
-    return res.render('cards', {
-      title: 'Cardas',
-      cards: cards,
+    const lists = await List.find()
+      .populate('cards');
+
+    return res.render('lists', {
+      title: 'Listas',
+      lists,
     });
   },
 };

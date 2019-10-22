@@ -3,7 +3,7 @@
 
     <div class="jumbotron">
         <h2>Criar lista:</h2>
-        <form action="./lists" method="POST" accept-charset="utf-8">
+        <form action="./lists/new" method="POST" accept-charset="utf-8">
             <label for="name">Nome: </label>
             <input type="text" name="name" value=""/>
             <label for="description">Descricao: </label>
@@ -31,7 +31,16 @@
                     </div>
                     <div class="card-body">
                         {{#each cards}}
-                            <p>{{ this.name }}</p>
+                            <div class="card m-3">
+                                <div class="card-body">
+                                    <h4>{{ this.name }}</h4>
+                                    <p>{{ this.description }}</p>
+                                    </div>
+                                <div class="float-right">
+                                    <a type="button" class="float-right btn-sm btn-primary m-2">Editar</a>
+                                    <a type="button"  href="/cards/destroy/{{ this.id }}" class="float-right btn-sm btn-success m-2">Excluir</a>
+                                </div>
+                            </div>
                         {{/each}}
 
                         <a class="btn btn-success" href="/cards/new?list={{ this.id }}">Novo cartão</a>
