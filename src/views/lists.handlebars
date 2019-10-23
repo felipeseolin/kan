@@ -15,13 +15,16 @@
                                 <div class="card-body">
                                     <h4>{{ this.name }}</h4>
                                     <p>{{ this.description }}</p>
-                                    </div>
+                                </div>
                                 <div class="float-right">
                                     <div class="m-2 float-right">
                                         <a href="/cards/{{ this.id }}" class="btn btn-sm btn-primary">Editar</a>
                                     </div>
                                     <div class="float-right m-2">
-                                        <a href="/" href="/cards/destroy/{{ this.id }}" class="btn btn-sm btn-danger">Excluir</a>
+                                        <!--                                        <a href="/cards/destroy/{{ this.id }}" class="btn btn-sm btn-danger">Excluir</a>-->
+                                        <button id="{{ this.id }}" class="btn btn-sm btn-danger deleteCard" type="button">
+                                            Excluir
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -40,3 +43,23 @@
         </div>
     </div>
 </div>
+
+<script src="/axios/dist/axios.js"></script>
+<script>
+    $btnsDeleteCard = document.querySelectorAll('.deleteCard');
+
+    $btnsDeleteCard.forEach($btnDeleteCard => {
+        $btnDeleteCard.addEventListener('click', (event) => {
+            const cardId = event.target.id;
+            axios
+                .delete(`/cards/destroy/${cardId}`)
+                .then(() => {
+                  alert("O cartão foi excluído");
+                })
+                .catch(() => {
+                  alert("Ocorreu um erro durante a exclusão, tente novamente mais tarde.");
+                })
+                .finally(() => window.location.reload());
+        });
+    });
+</script>

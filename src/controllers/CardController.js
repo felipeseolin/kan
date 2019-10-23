@@ -78,14 +78,13 @@ module.exports = {
     return res.json(true);
   },
   async destroy(req, res) {
-    await Card.findByIdAndRemove(req.params.id);
+    // Delelete card
+    const card = await Card.findByIdAndRemove(req.params.id);
+    // Delete from list
+    const list = await List.findOne({ cards: card.id });
+    list.cards = list.cards.filter((item) => !item.equals(req.params.id));
+    list.save();
 
-    const lists = await List.find()
-      .populate('cards');
-
-    return res.render('lists', {
-      title: 'Listas',
-      lists,
-    });
+    return res.sendStatus(200);
   },
 };

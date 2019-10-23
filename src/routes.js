@@ -20,6 +20,6 @@ routes.get('/cards/new', CardController.form);
 routes.post('/cards/new', CardController.store);
 routes.get('/cards/:id', CardController.show);
 routes.patch('/cards/:id', CardController.update);
-routes.get('/cards/destroy/:id', CardController.destroy);
+routes.delete('/cards/destroy/:id', CardController.destroy);
 
 module.exports = routes;
