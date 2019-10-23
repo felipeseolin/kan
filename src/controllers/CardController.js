@@ -56,10 +56,26 @@ module.exports = {
     return res.redirect('/lists');
   },
   async update(req, res) {
-    const card = await Card.findByIdAndUpdate(req.params.id, req.body, {
+    const listId = req.body._list;
+    const cardId = req.params.id;
+    const card = await Card.findById(cardId);
+
+    if (!card._list.equals(listId)) {
+      const oldList = await List.findById(card._list);
+      const newList = await List.findById(listId);
+
+      oldList.cards = oldList.cards.filter((item) => !item.equals(cardId));
+      oldList.save();
+
+      newList.cards.push(cardId);
+      newList.save();
+    }
+
+    const cardUpdate = await Card.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    return res.json(card);
+
+    return res.json(true);
   },
   async destroy(req, res) {
     await Card.findByIdAndRemove(req.params.id);

@@ -21,9 +21,9 @@
                 <option value="" disabled>Selecione uma lista...</option>
                 {{#each lists}}
                 {{#if this.isCardList}}
-                <option value="{{this.id}}" selected>{{this.name}}</option>
+                <option value="{{this._id}}" selected>{{this.name}}</option>
                 {{else}}
-                <option value="{{this.id}}">{{this.name}}</option>
+                <option value="{{this._id}}">{{this.name}}</option>
                 {{/if}}
                 {{/each}}
             </select>
@@ -31,9 +31,7 @@
         </div>
         {{/if}}
         <!-- List-id Input Hidden -->
-        <input id="_list" name="_list" type="text" value="{{ list }}" hidden />
-        <!-- Card id -->
-        <input id="_id" name="_id" type="text" value="{{ card.id }}" hidden />
+        <input id="_list" name="_list" type="text" value="{{ card._list }}" hidden />
 
         <button id="btnForm" class="btn btn-success" type="{{ buttonType }}">Salvar</button>
     </form>
@@ -42,26 +40,29 @@
 
 <script src="/axios/dist/axios.js"></script>
 <script>
-    console.log('aaaaaaaaaaaaaaaaaaaa');
 
     const $btnForm = document.querySelector('#btnForm');
 
     $btnForm.addEventListener('click', (event) => {
+        $btnForm.disabled = true;
         const formData = getFormData();
-        console.log(formData);
-        /*axios
-            .patch(`/cards/${formData._id}`, formData)
-            .then((res) => console.log('foi'))
-            .catch((err) => console.log('ou nao'))
-            */
+        axios
+            .patch(`/cards/{{ card.id }}`, formData)
+            .then((res) => {
+              alert("Cartão atualizado com sucesso");
+              window.location.href = "/lists";
+            })
+            .catch((err) => {
+                alert("Ocorreu um erro ao atulizar os dados do cartao, tente novamente");
+                window.location.reload();
+            });
     });
 
     function getFormData() {
         return {
-            _id: document.querySelector("#_id").value,
             name: document.querySelector("#name").value,
             description: document.querySelector("#description").value,
-            _list: document.querySelectorAll("#list").value
+            _list: document.querySelector("#list").value
         };
     }
 </script>
