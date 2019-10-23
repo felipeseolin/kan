@@ -45,6 +45,7 @@ module.exports = {
   },
   async destroy(req, res) {
     await List.findByIdAndRemove(req.params.id);
+    await Card.deleteMany({ _list: req.params.id })
     return res.redirect('/lists')
   },
 };
