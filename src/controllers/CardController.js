@@ -8,14 +8,28 @@ const List = mongoose.model('List');
 module.exports = {
   async index(req, res) {
     const cards = await Card.find();
-    return res.render('cards', {
-      title: 'Cardas',
+    return res.render('card.list.handlebars', {
+      title: 'Cartões',
       cards,
     });
   },
   async show(req, res) {
     const card = await Card.findById(req.params.id);
-    return res.json(card);
+    const allLists = await List.find();
+
+    const lists = allLists.map((list) => {
+      const newList = { ...list._doc };
+      newList.isCardList = card._list.equals(newList._id);
+      return newList;
+    });
+
+    console.log(lists);
+
+    return res.render('card.create.handlebars', {
+      title: `Editar Cartão: ${card.name}`,
+      card,
+      lists,
+    });
   },
   form(req, res) {
     return res.render('card.create.handlebars', {

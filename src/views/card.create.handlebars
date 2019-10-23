@@ -5,17 +5,34 @@
         <!-- Name Input -->
         <div class="form-group">
             <label for="name">Nome: </label>
-            <input id="name" name="name" class="form-control" type="text" required/>
+            <input id="name" name="name" class="form-control" type="text" value="{{ card.name }}" required/>
         </div>
         <!-- Description Textarea -->
         <div class="form-group">
             <label for="description">Descrição: </label>
-            <textarea id="description" name="description" class="form-control" cols="5" rows="10"></textarea>
+            <textarea id="description" name="description" class="form-control" cols="5" rows="10">{{ card.description }}</textarea>
         </div>
+        <!-- Change list -->
+        {{#if lists}}
+            <div class="form-group">
+                <label for="list">Trocar de lista</label>
+                <select id="list" name="list" class="form-control" required>
+                    <option value="" disabled>Selecione uma lista...</option>
+                    {{#each lists}}
+                        {{#if this.isCardList}}
+                            <option value="{{this.id}}" selected>{{this.name}}</option>
+                        {{else}}
+                            <option value="{{this.id}}">{{this.name}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select>
+
+            </div>
+        {{/if}}
         <!-- List-id Input Hidden -->
         <input id="_list" name="_list" type="text" value="{{ list }}" hidden/>
 
-        <button class="btn btn-success">Inserir</button>
+        <button class="btn btn-success">Salvar</button>
     </form>
 
 </div>
