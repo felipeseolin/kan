@@ -8,9 +8,8 @@ const Card = mongoose.model('Card');
 
 module.exports = {
   async index(req, res) {
-    const lists = await List.find();
-
-    lists.map((list) => console.log(list));
+    const lists = await List.find()
+      .populate('cards');
 
     return res.render('lists', {
       title: 'Listas',
@@ -46,11 +45,7 @@ module.exports = {
   },
   async destroy(req, res) {
     await List.findByIdAndRemove(req.params.id);
-
-    const lists = await List.find();
-    return res.render('lists', {
-      title: 'Listas',
-      lists,
-    });
+    await Card.deleteMany({ _list: req.params.id })
+    return res.redirect('/lists')
   },
 };

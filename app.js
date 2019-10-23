@@ -15,6 +15,9 @@ mongoose.connect('mongodb://localhost:27017/kan', {
   useNewUrlParser: true,
 });
 
+app.use(express.static('public'));
+app.use(express.static('node_modules'));
+
 app.use('/', require('./src/routes'));
 
 app.listen(3000);
