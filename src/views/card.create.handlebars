@@ -1,38 +1,67 @@
 <div class="container">
     <h1>Novo cartão</h1>
 
-    <form action="/cards/new" method="POST" accept-charset="utf-8">
+    <form id="form" action="{{ formAction }}" method="POST" accept-charset="utf-8">
         <!-- Name Input -->
         <div class="form-group">
             <label for="name">Nome: </label>
-            <input id="name" name="name" class="form-control" type="text" value="{{ card.name }}" required/>
+            <input id="name" name="name" class="form-control" type="text" value="{{ card.name }}" required />
         </div>
         <!-- Description Textarea -->
         <div class="form-group">
             <label for="description">Descrição: </label>
-            <textarea id="description" name="description" class="form-control" cols="5" rows="10">{{ card.description }}</textarea>
+            <textarea id="description" name="description" class="form-control" cols="5"
+                rows="10">{{ card.description }}</textarea>
         </div>
         <!-- Change list -->
         {{#if lists}}
-            <div class="form-group">
-                <label for="list">Trocar de lista</label>
-                <select id="list" name="list" class="form-control" required>
-                    <option value="" disabled>Selecione uma lista...</option>
-                    {{#each lists}}
-                        {{#if this.isCardList}}
-                            <option value="{{this.id}}" selected>{{this.name}}</option>
-                        {{else}}
-                            <option value="{{this.id}}">{{this.name}}</option>
-                        {{/if}}
-                    {{/each}}
-                </select>
+        <div class="form-group">
+            <label for="list">Trocar de lista</label>
+            <select id="list" name="list" class="form-control" required>
+                <option value="" disabled>Selecione uma lista...</option>
+                {{#each lists}}
+                {{#if this.isCardList}}
+                <option value="{{this.id}}" selected>{{this.name}}</option>
+                {{else}}
+                <option value="{{this.id}}">{{this.name}}</option>
+                {{/if}}
+                {{/each}}
+            </select>
 
-            </div>
+        </div>
         {{/if}}
         <!-- List-id Input Hidden -->
-        <input id="_list" name="_list" type="text" value="{{ list }}" hidden/>
+        <input id="_list" name="_list" type="text" value="{{ list }}" hidden />
+        <!-- Card id -->
+        <input id="_id" name="_id" type="text" value="{{ card.id }}" hidden />
 
-        <button class="btn btn-success">Salvar</button>
+        <button id="btnForm" class="btn btn-success" type="{{ buttonType }}">Salvar</button>
     </form>
 
 </div>
+
+<script src="/axios/dist/axios.js"></script>
+<script>
+    console.log('aaaaaaaaaaaaaaaaaaaa');
+
+    const $btnForm = document.querySelector('#btnForm');
+
+    $btnForm.addEventListener('click', (event) => {
+        const formData = getFormData();
+        console.log(formData);
+        /*axios
+            .patch(`/cards/${formData._id}`, formData)
+            .then((res) => console.log('foi'))
+            .catch((err) => console.log('ou nao'))
+            */
+    });
+
+    function getFormData() {
+        return {
+            _id: document.querySelector("#_id").value,
+            name: document.querySelector("#name").value,
+            description: document.querySelector("#description").value,
+            _list: document.querySelectorAll("#list").value
+        };
+    }
+</script>

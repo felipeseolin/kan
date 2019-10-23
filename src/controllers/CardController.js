@@ -23,10 +23,10 @@ module.exports = {
       return newList;
     });
 
-    console.log(lists);
-
     return res.render('card.create.handlebars', {
       title: `Editar Cartão: ${card.name}`,
+      formAction: `/cards/${card.id}`,
+      buttonType: 'button',
       card,
       lists,
     });
@@ -34,7 +34,9 @@ module.exports = {
   form(req, res) {
     return res.render('card.create.handlebars', {
       title: 'Novo cartão',
+      formAction: '/cards/new',
       list: req.query.list,
+      buttonType: 'submit',
     });
   },
   async store(req, res) {
