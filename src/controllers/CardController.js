@@ -75,7 +75,7 @@ module.exports = {
       new: true,
     });
 
-    return res.json(true);
+    return res.send();
   },
   async destroy(req, res) {
     // Delelete card
@@ -85,6 +85,6 @@ module.exports = {
     list.cards = list.cards.filter((item) => !item.equals(req.params.id));
     list.save();
 
-    return res.sendStatus(200);
+    return res.send();
   },
 };
