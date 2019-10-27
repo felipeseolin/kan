@@ -1,0 +1,28 @@
+<div class="container">
+
+    <h1>{{ title }}</h1>
+
+    <a href="/boards/new" class="btn btn-success">Novo quadro</a>
+
+    {{#each boards}}
+        <div class="card m-3">
+            <a href="/boards/{{ this.id }}">
+                <div class="card-body">
+                    <h4>{{ this.name }}</h4>
+                    <p>{{ this.description }}</p>
+                </div>
+                <div class="float-right">
+                    <div class="m-2 float-right">
+                        <a href="/boards/{{ this.id }}" class="btn btn-sm btn-primary">Visualizar</a>
+                    </div>
+                    <div class="m-2 float-right">
+                        <a href="/boards/edit/{{ this.id }}" class="btn btn-sm btn-secondary">Editar</a>
+                    </div>
+                    <div class="m-2 float-right">
+                        <a href="/boards/destroy/{{ this.id }}" class="btn btn-sm btn-danger">Excluir</a>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {{/each}}
+</div>

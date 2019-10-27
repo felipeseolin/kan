@@ -2,11 +2,19 @@ const express = require('express');
 
 const routes = express.Router();
 
+const BoardController = require('./controllers/BoardController');
 const ListController = require('./controllers/ListController');
 const CardController = require('./controllers/CardController');
 
 routes.get('/', (req, res) => res.render('index', { title: 'Login' }));
 
+// Board
+routes.get('/boards', BoardController.index);
+routes.get('/boards/new', BoardController.form);
+routes.post('/boards/new', BoardController.store);
+routes.get('/boards/edit/:id', BoardController.show);
+routes.post('/boards/edit/:id', BoardController.update);
+routes.get('/boards/destroy/:id', BoardController.destroy);
 // Lists
 routes.get('/lists', ListController.index);
 routes.get('/lists/new', ListController.form);

@@ -1,0 +1,20 @@
+<div class="container">
+    <h1>{{ title }}</h1>
+
+    <form id="form" action="{{ formAction }}" method="POST" accept-charset="utf-8">
+        <!-- Name Input -->
+        <div class="form-group">
+            <label for="name">Nome: </label>
+            <input id="name" name="name" class="form-control" type="text" value="{{ board.name }}" required/>
+        </div>
+        <!-- Description Textarea -->
+        <div class="form-group">
+            <label for="description">Descrição: </label>
+            <textarea id="description" name="description" class="form-control" cols="5"
+                      rows="10">{{ board.description }}</textarea>
+        </div>
+
+        <button id="btnForm" class="btn btn-success float-right" type="submit">Salvar</button>
+    </form>
+
+</div>
