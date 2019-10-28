@@ -58,7 +58,7 @@ module.exports = {
   },
   async destroy(req, res) {
     const list = await List.findByIdAndRemove(req.params.idlist);
-    await Card.deleteMany({ _list: req.params.id });
+    await Card.deleteMany({ _list: req.params.idlist });
 
     // Delete from board
     const board = await Board.findOne({ lists: list.id });

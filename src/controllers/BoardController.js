@@ -48,7 +48,14 @@ module.exports = {
     return res.redirect('/boards');
   },
   async details(req, res) {
-    const board = await Board.findById(req.params.id).populate('lists').populate('cards');
+    const board = await Board.findById(req.params.id)
+      .populate({
+        path: 'lists',
+        populate: {
+          path: 'cards',
+        },
+      });
+
     return res.render('board.details.handlebars', {
       title: `${board.name}`,
       board,

@@ -14,8 +14,9 @@ module.exports = {
     });
   },
   async show(req, res) {
-    const card = await Card.findById(req.params.id);
-    const allLists = await List.find();
+    const card = await Card.findById(req.params.idcard);
+    const currentList = await List.findById(req.params.idlist);
+    const allLists = await List.find({ board: currentList.board });
 
     const lists = allLists.map((list) => {
       const newList = { ...list._doc };
@@ -26,7 +27,6 @@ module.exports = {
     return res.render('card.create.handlebars', {
       title: `Editar Cartão: ${card.name}`,
       formAction: `/cards/${card.id}`,
-      buttonType: 'button',
       card,
       lists,
     });
@@ -35,12 +35,12 @@ module.exports = {
     return res.render('card.create.handlebars', {
       title: 'Novo cartão',
       formAction: '/cards/new',
-      list: req.query.list,
-      buttonType: 'submit',
+      list: req.params.id,
     });
   },
   async store(req, res) {
     const list = await List.findById(req.body._list);
+
     if (!list) {
       res.send('error');
     }
@@ -53,12 +53,13 @@ module.exports = {
     list.cards.push(card);
     list.save();
 
-    return res.redirect('/lists');
+    return res.redirect(`/boards/${list._board}`);
   },
   async update(req, res) {
-    const listId = req.body._list;
+    const listId = req.body.list;
     const cardId = req.params.id;
     const card = await Card.findById(cardId);
+    const list = await List.findById(listId);
 
     if (!card._list.equals(listId)) {
       const oldList = await List.findById(card._list);
@@ -75,16 +76,16 @@ module.exports = {
       new: true,
     });
 
-    return res.send();
+    return res.redirect(`/boards/${list._board}`);
   },
   async destroy(req, res) {
     // Delelete card
-    const card = await Card.findByIdAndRemove(req.params.id);
+    const card = await Card.findByIdAndRemove(req.params.idcard);
     // Delete from list
     const list = await List.findOne({ cards: card.id });
-    list.cards = list.cards.filter((item) => !item.equals(req.params.idlist));
+    list.cards = list.cards.filter((item) => !item.equals(req.params.idcard));
     list.save();
 
-    return res.send();
+    return res.redirect(`/boards/${list._board}`);
   },
 };

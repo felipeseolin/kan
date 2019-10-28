@@ -23,11 +23,11 @@ routes.get('/boards/:idboard/lists/:idlist', ListController.show);
 routes.post('/lists/:id', ListController.update);
 routes.get('/boards/:idboard/lists/destroy/:idlist', ListController.destroy);
 // Cards
-routes.get('/cards', CardController.index);
-routes.get('/cards/new', CardController.form);
+routes.get('/lists/:id/cards/new', CardController.form);
 routes.post('/cards/new', CardController.store);
-routes.get('/cards/:id', CardController.show);
-routes.patch('/cards/:id', CardController.update);
-routes.delete('/cards/destroy/:id', CardController.destroy);
+routes.get('/lists/:idlist/cards/:idcard', CardController.show);
+routes.post('/cards/:id', CardController.update);
+routes.get('/lists/:idlist/cards/destroy/:idcard', CardController.destroy);
+
 
 module.exports = routes;

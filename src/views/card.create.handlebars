@@ -5,68 +5,36 @@
         <!-- Name Input -->
         <div class="form-group">
             <label for="name">Nome: </label>
-            <input id="name" name="name" class="form-control" type="text" value="{{ card.name }}" required />
+            <input id="name" name="name" class="form-control" type="text" value="{{ card.name }}" required/>
         </div>
         <!-- Description Textarea -->
         <div class="form-group">
             <label for="description">Descrição: </label>
             <textarea id="description" name="description" class="form-control" cols="5"
-                rows="10">{{ card.description }}</textarea>
+                      rows="10">{{ card.description }}</textarea>
         </div>
 
         {{#if lists}}
             <!-- Change list -->
             <div class="form-group">
-            <label for="list">Trocar de lista</label>
-            <select id="list" name="list" class="form-control" required>
-                <option value="" disabled>Selecione uma lista...</option>
-                {{#each lists}}
-                {{#if this.isCardList}}
-                <option value="{{this._id}}" selected>{{this.name}}</option>
-                {{else}}
-                <option value="{{this._id}}">{{this.name}}</option>
-                {{/if}}
-                {{/each}}
-            </select>
-
-        </div>
+                <label for="list">Trocar de lista</label>
+                <select id="list" name="list" class="form-control" required>
+                    <option value="" disabled>Selecione uma lista...</option>
+                    {{#each lists}}
+                        {{#if this.isCardList}}
+                            <option value="{{this._id}}" selected>{{this.name}}</option>
+                        {{else}}
+                            <option value="{{this._id}}">{{this.name}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </div>
         {{else}}
             <!-- List-id Input Hidden -->
-            <input id="_list" name="_list" type="text" value="{{ list }}" hidden />
+            <input id="_list" name="_list" type="text" value="{{ list }}" hidden/>
         {{/if}}
 
-        <button id="btnForm" class="btn btn-success float-right" type="{{ buttonType }}">Salvar</button>
+        <button id="btnForm" class="btn btn-success float-right" type="submit">Salvar</button>
     </form>
 
 </div>
-
-<script src="/axios/dist/axios.js"></script>
-<script>
-
-    const $btnForm = document.querySelector('#btnForm');
-
-    if ($btnForm.type !== 'submit') {
-        $btnForm.addEventListener('click', (event) => {
-            $btnForm.disabled = true;
-            const formData = getFormData();
-            axios
-                    .patch(`/cards/{{ card.id }}`, formData)
-                    .then((res) => {
-                        alert("Cartão atualizado com sucesso");
-                        window.location.href = "/lists";
-                    })
-                    .catch((err) => {
-                        alert("Ocorreu um erro ao atulizar os dados do cartao, tente novamente");
-                        window.location.reload();
-                    });
-        });
-    }
-
-    function getFormData() {
-        return {
-            name: document.querySelector("#name").value,
-            description: document.querySelector("#description").value,
-            _list: document.querySelector("#list").value
-        };
-    }
-</script>

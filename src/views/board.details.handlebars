@@ -22,25 +22,24 @@
                                     <p>{{ this.description }}</p>
                                 </div>
                                 <div class="float-right">
-                                    <div class="m-2 float-right">
-                                        <a href="/cards/{{ this.id }}" class="btn btn-sm btn-primary">Editar</a>
+                                    <div class="m-1 float-right">
+                                        <a href="/lists/{{ ../this.id }}/cards/{{ this.id }}"
+                                           class="btn btn-sm btn-primary">Editar</a>
                                     </div>
-                                    <div class="float-right m-2">
-                                        <a href="/cards/destroy/{{ this.id }}" class="btn btn-sm btn-danger">Excluir</a>
-                                        <button id="{{ this.id }}" class="btn btn-sm btn-danger deleteCard"
-                                                type="button">
-                                            Excluir
-                                        </button>
+                                    <div class="m-1 float-right">
+                                        <a href="/lists/{{ ../this.id }}/cards/destroy/{{ this.id }}"
+                                           class="btn btn-sm btn-danger">Excluir</a>
                                     </div>
                                 </div>
                             </div>
                         {{/each}}
 
-                        <a class="btn btn-success" href="/cards/new?list={{ this.id }}">Novo cartão</a>
+                        <a class="btn btn-success" href="/lists/{{ this.id }}/cards/new">Novo cartão</a>
                     </div>
                     <div class="card-footer">
                         <a href="/boards/{{ ../board.id }}/lists/{{ this.id }}" class="btn btn-primary">Editar</a>
-                        <a href="/boards/{{ ../board.id }}/lists/destroy/{{ this.id }}" class="btn btn-danger">Excluir</a>
+                        <a href="/boards/{{ ../board.id }}/lists/destroy/{{ this.id }}"
+                           class="btn btn-danger">Excluir</a>
                     </div>
                 </div>
             </div>
