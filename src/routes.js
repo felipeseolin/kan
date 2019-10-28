@@ -9,6 +9,8 @@ const UserController = require('./controllers/UserController');
 
 routes.get('/', (req, res) => res.render('index', { title: 'Login' }));
 
+// Users
+routes.post('/users/login', UserController.login);
 routes.get('/users/new', UserController.form);
 routes.post('/users/new', UserController.store);
 
