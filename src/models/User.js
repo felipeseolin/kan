@@ -4,33 +4,36 @@ const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 
-const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+const UserSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    hashed_password: {
+      type: String,
+      default: '',
+    },
+    boards: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Board',
+      },
+    ],
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  hashed_password: {
-    type: String,
-    required: true,
-    default: '',
-  },
-  boards: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Board',
-  }],
-}, { timestamps: true });
+  { timestamps: true }
+);
 
-UserSchema.virtual('password')
-  .set((password) => {
-    this._password = password;
-  });
+UserSchema.virtual('password').set(password => {
+  this._password = password;
+});
 
-UserSchema.pre('save', (next) => {
+UserSchema.pre('save', next => {
   const user = this;
   if (user._password === undefined) {
     return next();

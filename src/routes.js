@@ -5,8 +5,12 @@ const routes = express.Router();
 const BoardController = require('./controllers/BoardController');
 const ListController = require('./controllers/ListController');
 const CardController = require('./controllers/CardController');
+const UserController = require('./controllers/UserController');
 
-routes.get('/', (req, res) => res.redirect('/boards'));
+routes.get('/', (req, res) => res.render('index', { title: 'Login' }));
+
+routes.get('/users/new', UserController.form);
+routes.post('/users/new', UserController.store);
 
 // Board
 routes.get('/boards', BoardController.index);
@@ -28,6 +32,5 @@ routes.post('/cards/new', CardController.store);
 routes.get('/lists/:idlist/cards/:idcard', CardController.show);
 routes.post('/cards/:id', CardController.update);
 routes.get('/lists/:idlist/cards/destroy/:idcard', CardController.destroy);
-
 
 module.exports = routes;
