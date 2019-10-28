@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 
 const BoardInit = require('../models/Board');
+const ListInit = require('../models/List');
+const CardInit = require('../models/Card');
 
 const Board = mongoose.model('Board');
+const List = mongoose.model('List');
+const Card = mongoose.model('Card');
 
 module.exports = {
   async index(req, res) {
@@ -45,6 +49,10 @@ module.exports = {
   },
   async destroy(req, res) {
     await Board.findByIdAndRemove(req.params.id);
+    const lists = await List.find({ _board: req.params.id });
+    lists.map(async (list) => await Card.deleteMany({ _list: list._id }));
+    await List.deleteMany({ _board: req.params.id });
+
     return res.redirect('/boards');
   },
   async details(req, res) {
