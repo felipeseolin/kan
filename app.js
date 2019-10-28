@@ -20,4 +20,5 @@ app.use(express.static('node_modules'));
 
 app.use('/', require('./src/routes'));
 
-app.listen(3000);
+const port = process.env.PORT || 3000;
+app.listen(port);
