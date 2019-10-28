@@ -1,19 +1,21 @@
 <div class="container">
     <h1>Nova lista</h1>
 
-    <form action="/lists/new" method="POST" accept-charset="utf-8">
+    <form action="{{ formAction }}" method="POST" accept-charset="utf-8">
         <!-- Name Input -->
         <div class="form-group">
             <label for="name">Nome: </label>
-            <input id="name" name="name" class="form-control" type="text" required/>
+            <input id="name" name="name" class="form-control" type="text" value="{{ list.name }}" required/>
         </div>
         <!-- Description Textarea -->
         <div class="form-group">
             <label for="description">Descrição: </label>
-            <textarea id="description" name="description" class="form-control" cols="5" rows="10"></textarea>
+            <textarea id="description" name="description" class="form-control" cols="5" rows="10">{{ list.description }}</textarea>
         </div>
+        <!-- Board id -->
+        <input id="_board" name="_board" type="text" value="{{ boardId }}" hidden>
 
-        <button class="btn btn-success float-right">Inserir</button>
+        <button class="btn btn-success float-right">Salvar</button>
     </form>
 
 </div>

@@ -82,7 +82,7 @@ module.exports = {
     const card = await Card.findByIdAndRemove(req.params.id);
     // Delete from list
     const list = await List.findOne({ cards: card.id });
-    list.cards = list.cards.filter((item) => !item.equals(req.params.id));
+    list.cards = list.cards.filter((item) => !item.equals(req.params.idlist));
     list.save();
 
     return res.send();

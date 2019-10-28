@@ -47,4 +47,11 @@ module.exports = {
     await Board.findByIdAndRemove(req.params.id);
     return res.redirect('/boards');
   },
+  async details(req, res) {
+    const board = await Board.findById(req.params.id).populate('lists').populate('cards');
+    return res.render('board.details.handlebars', {
+      title: `${board.name}`,
+      board,
+    });
+  },
 };
