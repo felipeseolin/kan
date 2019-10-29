@@ -1,5 +1,13 @@
 <div class="container">
-    <h1>Nova lista</h1>
+    <h1>{{ title }}</h1>
+
+    {{#if messages.error}}
+        <div class="alert alert-danger">
+            {{#each messages.error}}
+                <p>{{this}}</p>
+            {{/each}}
+        </div>
+    {{/if}}
 
     <form action="{{ formAction }}" method="POST" accept-charset="utf-8">
         <!-- Name Input -->

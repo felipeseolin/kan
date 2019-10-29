@@ -8,6 +8,28 @@ const List = mongoose.model('List');
 const Board = mongoose.model('Board');
 const Card = mongoose.model('Card');
 
+function validate(name, description, board) {
+  let errors = [];
+
+  if (!name || name.trim().length === 0) {
+    errors = [...errors, 'Um nome deve ser dado à lista.'];
+  }
+  if (name && name.length > 100) {
+    errors = [...errors, 'O nome deve ter ao máximo 100 caracteres.'];
+  }
+  if (name && name.length < 2) {
+    errors = [...errors, 'O nome deve ter ao mínimo 2 caracteres.'];
+  }
+  if (description && description.length > 250) {
+    errors = [...errors, 'A descrição deve ter ao máximo 250 caracteres.'];
+  }
+  if (!board) {
+    errors = [...errors, 'A lista deve pertencer a um quadro'];
+  }
+
+  return errors;
+}
+
 module.exports = {
   async index(req, res) {
     const lists = await List.find()
@@ -21,7 +43,7 @@ module.exports = {
   async show(req, res) {
     const list = await List.findById(req.params.idlist);
     return res.render('list.create.handlebars', {
-      title: list.name,
+      title: `Editar: ${list.name}`,
       boardId: req.params.idboard,
       formAction: `/lists/${req.params.idlist}`,
       list,
@@ -35,25 +57,48 @@ module.exports = {
     });
   },
   async store(req, res) {
+    // Find Board
     const board = await Board.findById(req.body._board);
-    if (!board) {
-      res.send('error');
+    // Validation
+    const errors = validate(req.body.name, req.body.description, board);
+    if (errors.length > 0) {
+      req.flash('error', errors);
+      return res.redirect('back');
     }
-
+    // Create List
     const list = await List.create(req.body);
     if (!list) {
-      return res.render('error');
+      req.flash('error', ['Ocorreu um erro ao salvar a lista. Tente novamente.']);
+      return res.redirect('back');
     }
-
+    // Update Board
     board.lists.push(list);
     board.save();
 
-    return res.redirect(`/boards/${req.body._board}`);
+    return res.redirect(`/boards/${board._id}`);
   },
   async update(req, res) {
+    // Find Board
+    const board = await Board.findById(req.body._board);
+    const listCheck = await List.findById(req.params.id);
+    // Validation
+    const errors = validate(req.body.name, req.body.description, board);
+    if (errors.length > 0) {
+      req.flash('error', errors);
+      return res.redirect('back');
+    }
+    if (!board._id.equals(listCheck.id)) {
+      req.flash('error', ['Não é possível trocar o quadro de uma lista.']);
+      return res.redirect('back');
+    }
+    // Create List
     const list = await List.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
+    if (!list) {
+      req.flash('error', ['Ocorreu um erro ao salvar a lista. Tente novamente.']);
+      return res.redirect('back');
+    }
     return res.redirect(`/boards/${req.body._board}`);
   },
   async destroy(req, res) {
