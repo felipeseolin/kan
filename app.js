@@ -21,7 +21,8 @@ app.use(session({
 
 app.use(flash());
 
-mongoose.connect('mongodb://localhost:27017/kan', {
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/kan';
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 });
 
