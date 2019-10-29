@@ -1,0 +1,18 @@
+<h1>{{ title }}</h1>
+
+<div class="container">
+    <form action="/lists/new" method="POST">
+        <!-- Title Input -->
+        <div class="form-group">
+            <label for="name">Titulo</label>
+            <input id="name" name="name" class="form-control" type="text"/>
+        </div>
+        <!-- Description Input -->
+        <div class="form-group">
+            <label for="description">Descriçao</label>
+            <input id="description" name="description" class="form-control" type="text"/>
+        </div>
+
+        <button type="submit">Salvar</button>
+    </form>
+</div>

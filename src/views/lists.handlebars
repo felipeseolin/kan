@@ -1,24 +1,65 @@
-<div class="container">
+<div class="container-fluid">
     <h2>Kanban</h2>
+    <div class="row">
 
-    <div class="jumbotron">
-        <form action="./lists" method="POST" accept-charset="utf-8">
-            <label for="name">Nome: </label>
-            <input type="text" name="name" value="" />
-            <label for="description">Descricao: </label>
-            <input type="text" name="description" value="" />
-            <input type="submit" name="create" value="Inserir">
-        </form>
-    </div>
+        {{#each lists}}
+            <div class="col col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>{{ this.name }}</h2>
+                        <p>{{ this.description }}</p>
+                    </div>
+                    <div class="card-body">
+                        {{#each cards}}
+                            <div class="card m-3">
+                                <div class="card-body">
+                                    <h4>{{ this.name }}</h4>
+                                    <p>{{ this.description }}</p>
+                                </div>
+                                <div class="float-right">
+                                    <div class="m-2 float-right">
+                                        <a href="/cards/{{ this.id }}" class="btn btn-sm btn-primary">Editar</a>
+                                    </div>
+                                    <div class="float-right m-2">
+                                        <!--                                        <a href="/cards/destroy/{{ this.id }}" class="btn btn-sm btn-danger">Excluir</a>-->
+                                        <button id="{{ this.id }}" class="btn btn-sm btn-danger deleteCard" type="button">
+                                            Excluir
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
 
-    {{#each lists}}
-    <div class="card m-5">
-        <div class="card-header">{{ this.name }}</div>
-        <div class="card-body">Content</div>
-        <div class="card-footer">
-            <a href="/lists/destroy/{{ this.id }}" class="btn btn-primary">Excluir</a>
+                        <a class="btn btn-success" href="/cards/new?list={{ this.id }}">Novo cartão</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/lists/destroy/{{ this.id }}" class="btn btn-danger">Excluir</a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+        <div class="col col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <a href="/lists/new" class="btn btn-success">Nova lista</a>
         </div>
     </div>
-    {{/each}}
-
 </div>
+
+<script src="/axios/dist/axios.js"></script>
+<script>
+    $btnsDeleteCard = document.querySelectorAll('.deleteCard');
+
+    $btnsDeleteCard.forEach($btnDeleteCard => {
+        $btnDeleteCard.addEventListener('click', (event) => {
+            const cardId = event.target.id;
+            axios
+                .delete(`/cards/destroy/${cardId}`)
+                .then(() => {
+                  alert("O cartão foi excluído");
+                })
+                .catch(() => {
+                  alert("Ocorreu um erro durante a exclusão, tente novamente mais tarde.");
+                })
+                .finally(() => window.location.reload());
+        });
+    });
+</script>

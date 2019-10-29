@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>{{ title }}</h1>
+
+    {{#if messages.error}}
+        <div class="alert alert-danger">
+            {{#each messages.error}}
+                <p>{{this}}</p>
+            {{/each}}
+        </div>
+    {{/if}}
+
+    <form id="form" action="{{ formAction }}" method="POST" accept-charset="utf-8">
+        <!-- Name Input -->
+        <div class="form-group">
+            <label for="name">Nome: </label>
+            <input id="name" name="name" class="form-control" type="text" value="{{ card.name }}" required/>
+        </div>
+        <!-- Description Textarea -->
+        <div class="form-group">
+            <label for="description">Descrição: </label>
+            <textarea id="description" name="description" class="form-control" cols="5"
+                      rows="10">{{ card.description }}</textarea>
+        </div>
+
+        {{#if lists}}
+            <!-- Change list -->
+            <div class="form-group">
+                <label for="list">Trocar de lista</label>
+                <select id="list" name="list" class="form-control" required>
+                    <option value="" disabled>Selecione uma lista...</option>
+                    {{#each lists}}
+                        {{#if this.isCardList}}
+                            <option value="{{this._id}}" selected>{{this.name}}</option>
+                        {{else}}
+                            <option value="{{this._id}}">{{this.name}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </div>
+        {{else}}
+            <!-- List-id Input Hidden -->
+            <input id="_list" name="_list" type="text" value="{{ list }}" hidden/>
+        {{/if}}
+
+        <button id="btnForm" class="btn btn-success float-right" type="submit">Salvar</button>
+    </form>
+</div>

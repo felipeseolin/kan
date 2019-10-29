@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    <h1>{{ title }}</h1>
+    <p>{{ board.description }}</p>
+
+    <div class="col col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3 mt-3 p-0">
+        <a href="/boards/{{ board.id }}/lists/new" class="btn btn-success">Nova lista</a>
+    </div>
+
+    <div class="row">
+
+        {{#each board.lists}}
+            <div class="col col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>{{ this.name }}</h2>
+                        <p>{{ this.description }}</p>
+                    </div>
+                    <div class="card-body">
+                        {{#each this.cards}}
+                            <div class="card m-3">
+                                <div class="card-body">
+                                    <h4>{{ this.name }}</h4>
+                                    <p>{{ this.description }}</p>
+                                </div>
+                                <div class="float-right">
+                                    <div class="m-1 float-right">
+                                        <a href="/lists/{{ ../this.id }}/cards/{{ this.id }}"
+                                           class="btn btn-sm btn-primary">Editar</a>
+                                    </div>
+                                    <div class="m-1 float-right">
+                                        <a href="/lists/{{ ../this.id }}/cards/destroy/{{ this.id }}"
+                                           class="btn btn-sm btn-danger">Excluir</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+
+                        <a class="btn btn-success" href="/lists/{{ this.id }}/cards/new">Novo cartão</a>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/boards/{{ ../board.id }}/lists/{{ this.id }}" class="btn btn-primary">Editar</a>
+                        <a href="/boards/{{ ../board.id }}/lists/destroy/{{ this.id }}"
+                           class="btn btn-danger">Excluir</a>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

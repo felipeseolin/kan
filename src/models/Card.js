@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const ListSchema = new Schema({
+const CardSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -11,15 +11,11 @@ const ListSchema = new Schema({
     type: String,
     required: false,
   },
-  cards: [{
+  _list: {
     type: Schema.Types.ObjectId,
-    ref: 'Card',
-  }],
-  _board: {
-    type: Schema.Types.ObjectId,
-    ref: 'Board',
+    ref: 'List',
     required: true,
   },
 }, { timestamps: true });
 
-mongoose.model('List', ListSchema);
+mongoose.model('Card', CardSchema);
