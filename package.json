@@ -4,6 +4,7 @@
   "description": "Web 2 Project",
   "scripts": {
     "start": "node ./app.js",
+    "build": "node ./app.js",
     "dev": "nodemon ./app.js",
     "lint": "eslint src -c .eslintrc.json --ext js,jsx"
   },
