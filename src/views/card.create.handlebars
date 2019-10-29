@@ -1,5 +1,13 @@
 <div class="container">
-    <h1>Novo cartão</h1>
+    <h1>{{ title }}</h1>
+
+    {{#if messages.error}}
+        <div class="alert alert-danger">
+            {{#each messages.error}}
+                <p>{{this}}</p>
+            {{/each}}
+        </div>
+    {{/if}}
 
     <form id="form" action="{{ formAction }}" method="POST" accept-charset="utf-8">
         <!-- Name Input -->
@@ -36,5 +44,4 @@
 
         <button id="btnForm" class="btn btn-success float-right" type="submit">Salvar</button>
     </form>
-
 </div>
